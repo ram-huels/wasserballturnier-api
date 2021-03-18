@@ -4,8 +4,7 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 
-@Component
-@Table
+@Entity
 public class Mannschaft {
 
     @Id

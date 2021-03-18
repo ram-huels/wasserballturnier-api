@@ -5,18 +5,17 @@ import wasserballturnier.api.persistence.mannschaft.Mannschaft;
 
 import javax.persistence.*;
 
-@Component
-@Table
+@Entity
 public class Spiel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long spielId;
 
-    @Column()
+    @ManyToOne(fetch = FetchType.EAGER)
     private Mannschaft heimmannschaft;
 
-    @Column()
+    @ManyToOne(fetch = FetchType.EAGER)
     private Mannschaft auswaertsmannschaft;
 
     @Column()

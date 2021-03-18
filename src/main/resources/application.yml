@@ -1,0 +1,10 @@
+openapi:
+  title: @project.name@
+  description: @project.description@
+  version: @project.version@
+  contact:
+    name: Wasserballturnier
+    email: ram.huels@gmail.com
+spring:
+  jpa:
+    show-sql: true
