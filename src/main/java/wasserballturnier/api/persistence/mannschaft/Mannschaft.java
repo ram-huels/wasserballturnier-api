@@ -15,31 +15,29 @@ public class Mannschaft {
     private String mannschaftsname;
 
     @Column()
-    private int anzahlSiege;
+    private int anzahlSpiele = 0;
 
     @Column()
-    private int anzahlUnterschieden;
+    private int anzahlSiege = 0;
 
     @Column()
-    private int anzahlNiederlagen;
+    private int anzahlUnterschieden = 0;
 
     @Column()
-    private int tore;
+    private int anzahlNiederlagen = 0;
 
     @Column()
-    private int gegentore;
+    private int tore = 0;
 
     @Column()
-    private int punkte;
+    private int gegentore = 0;
 
-    public Mannschaft(String mannschaftsname, int anzahlSiege, int anzahlUnterschieden, int anzahlNiederlagen, int tore, int gegentore, int punkte) {
+    @Column()
+    private int punkte = 0;
+
+    public Mannschaft(String mannschaftsname) {
+        super();
         this.mannschaftsname = mannschaftsname;
-        this.anzahlSiege = anzahlSiege;
-        this.anzahlUnterschieden = anzahlUnterschieden;
-        this.anzahlNiederlagen = anzahlNiederlagen;
-        this.tore = tore;
-        this.gegentore = gegentore;
-        this.punkte = punkte;
     }
 
     protected Mannschaft() {}
@@ -56,28 +54,36 @@ public class Mannschaft {
         this.mannschaftsname = mannschaftsname;
     }
 
+    public int getAnzahlSpiele() {
+        return anzahlSpiele;
+    }
+
+    public void setAnzahlSpiele() {
+        this.anzahlSpiele += 1;
+    }
+
     public int getAnzahlSiege() {
         return anzahlSiege;
     }
 
-    public void setAnzahlSiege(int anzahlSiege) {
-        this.anzahlSiege = anzahlSiege;
+    public void setAnzahlSiege() {
+        this.anzahlSiege += 1;
     }
 
     public int getAnzahlUnterschieden() {
         return anzahlUnterschieden;
     }
 
-    public void setAnzahlUnterschieden(int anzahlUnterschieden) {
-        this.anzahlUnterschieden = anzahlUnterschieden;
+    public void setAnzahlUnterschieden() {
+        this.anzahlUnterschieden += 1;
     }
 
     public int getAnzahlNiederlagen() {
         return anzahlNiederlagen;
     }
 
-    public void setAnzahlNiederlagen(int anzahlNiederlagen) {
-        this.anzahlNiederlagen = anzahlNiederlagen;
+    public void setAnzahlNiederlagen() {
+        this.anzahlNiederlagen += 1;
     }
 
     public int getTore() {
@@ -85,7 +91,7 @@ public class Mannschaft {
     }
 
     public void setTore(int tore) {
-        this.tore = tore;
+        this.tore += tore;
     }
 
     public int getGegentore() {
@@ -93,7 +99,7 @@ public class Mannschaft {
     }
 
     public void setGegentore(int gegentore) {
-        this.gegentore = gegentore;
+        this.gegentore += gegentore;
     }
 
     public int getPunkte() {
@@ -101,6 +107,6 @@ public class Mannschaft {
     }
 
     public void setPunkte(int punkte) {
-        this.punkte = punkte;
+        this.punkte += punkte;
     }
 }

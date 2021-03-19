@@ -36,6 +36,7 @@ public class Gruppe {
     private Mannschaft mannschaft6;
 
     public Gruppe(String gruppenbezeichnung) {
+        super();
         this.gruppenbezeichnung = gruppenbezeichnung;
     }
 

@@ -25,6 +25,7 @@ public class Spiel {
     private int auswaertstore;
 
     public Spiel(Mannschaft heimmannschaft, Mannschaft auswaertsmannschaft, int heimtore, int auswaertstore) {
+        super();
         this.heimmannschaft = heimmannschaft;
         this.auswaertsmannschaft = auswaertsmannschaft;
         this.heimtore = heimtore;
