@@ -1,6 +1,8 @@
 package wasserballturnier.api.persistence.spiel;
 
+import com.sun.istack.NotNull;
 import org.springframework.stereotype.Component;
+import wasserballturnier.api.persistence.gruppe.Gruppe;
 import wasserballturnier.api.persistence.mannschaft.Mannschaft;
 
 import javax.persistence.*;
@@ -19,17 +21,15 @@ public class Spiel {
     private Mannschaft auswaertsmannschaft;
 
     @Column()
-    private int heimtore;
+    private int heimtore = 0;
 
     @Column()
-    private int auswaertstore;
+    private int auswaertstore = 0;
 
-    public Spiel(Mannschaft heimmannschaft, Mannschaft auswaertsmannschaft, int heimtore, int auswaertstore) {
+    public Spiel(Mannschaft heimmannschaft, Mannschaft auswaertsmannschaft) {
         super();
         this.heimmannschaft = heimmannschaft;
         this.auswaertsmannschaft = auswaertsmannschaft;
-        this.heimtore = heimtore;
-        this.auswaertstore = auswaertstore;
     }
 
     protected Spiel() {}
@@ -58,15 +58,32 @@ public class Spiel {
         return heimtore;
     }
 
-    public void setHeimtore(int heimtore) {
-        this.heimtore = heimtore;
-    }
-
     public int getAuswaertstore() {
         return auswaertstore;
     }
 
-    public void setAuswaertstore(int auswaertstore) {
+    public void updateSpiel(int heimtore, int auswaertstore) {
+        this.heimtore = heimtore;
         this.auswaertstore = auswaertstore;
+        this.heimmannschaft.setAnzahlSpiele();
+        this.auswaertsmannschaft.setAnzahlSpiele();
+        this.heimmannschaft.setTore(heimtore);
+        this.auswaertsmannschaft.setGegentore(heimtore);
+        this.heimmannschaft.setGegentore(auswaertstore);
+        this.auswaertsmannschaft.setTore(auswaertstore);
+        if (heimtore > auswaertstore) {
+            this.heimmannschaft.setAnzahlSiege();
+            this.heimmannschaft.setPunkte(3);
+            this.auswaertsmannschaft.setAnzahlNiederlagen();
+        } else if (auswaertstore > heimtore) {
+            this.heimmannschaft.setAnzahlNiederlagen();
+            this.auswaertsmannschaft.setAnzahlSiege();
+            this.auswaertsmannschaft.setPunkte(3);
+        } else {
+            this.heimmannschaft.setAnzahlUnterschieden();
+            this.auswaertsmannschaft.setPunkte(1);
+            this.auswaertsmannschaft.setAnzahlUnterschieden();
+            this.auswaertsmannschaft.setPunkte(1);
+        }
     }
 }

@@ -15,7 +15,7 @@ public class GruppeService {
         this.gruppeRepository = gruppeRepository;
     }
 
-    public void setGruppe(Gruppe gruppe){
+    public void addGruppe(Gruppe gruppe){
         this.gruppeRepository.save(gruppe);
     }
 

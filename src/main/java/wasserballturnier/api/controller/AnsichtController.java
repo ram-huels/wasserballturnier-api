@@ -27,10 +27,6 @@ public class AnsichtController {
         this.spielService = spielService;
     }
 
-    @GetMapping("/getMannschaften")
-    public List<Mannschaft> getMannschaften(){
-        return this.mannschaftService.getMannschaften();
-    }
 
     @GetMapping("/getGruppen")
     public List<Gruppe> getGruppen(){

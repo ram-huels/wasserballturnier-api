@@ -1,16 +1,16 @@
 package wasserballturnier.api.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import wasserballturnier.api.controller.schemata.CreateGruppeBody;
+import wasserballturnier.api.persistence.gruppe.Gruppe;
 import wasserballturnier.api.persistence.mannschaft.Mannschaft;
+import wasserballturnier.api.persistence.spiel.Spiel;
 import wasserballturnier.api.services.GruppeService;
 import wasserballturnier.api.services.MannschaftService;
 import wasserballturnier.api.services.SpielService;
 
-import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/verwaltung")
@@ -28,7 +28,27 @@ public class VerwaltungController {
     }
 
     @PutMapping("/addMannschaft")
-    public void setMannschaft(@Valid @RequestBody String mannschaftsname){
+    public void addMannschaft(@RequestBody String mannschaftsname){
         this.mannschaftService.addMannschaft(new Mannschaft(mannschaftsname));
+    }
+
+    @PutMapping("/addGruppe")
+    public void addGruppe(@RequestBody CreateGruppeBody createGruppeBody) {
+        Gruppe gruppe = new Gruppe(createGruppeBody.getGruppenname());
+        this.gruppeService.addGruppe(gruppe);
+        List<Mannschaft> mannschaftList = createGruppeBody.getMannschaftList();
+        for (Mannschaft mannschaft: mannschaftList) {
+            gruppe.addMannschaftZurGruppe(mannschaft);
+        }
+        for (int i = 0; i < mannschaftList.size(); i++) {
+            for(int j = i+1; j < mannschaftList.size(); j++){
+                gruppe.addSpielZurGruppe(new Spiel(createGruppeBody.getMannschaftList().get(i) , createGruppeBody.getMannschaftList().get(j)));
+            }
+        }
+    }
+
+    @GetMapping("/getMannschaften")
+    public List<Mannschaft> getMannschaften(){
+        return this.mannschaftService.getMannschaften();
     }
 }

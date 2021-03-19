@@ -15,11 +15,16 @@ public class SpielService {
         this.spielRepository = spielRepository;
     }
 
-    public void setSpiel(Spiel spiel){
+    public void addSpiel(Spiel spiel){
         this.spielRepository.save(spiel);
     }
 
     public List<Spiel> getSpiele(){
         return this.spielRepository.findAll();
+    }
+
+    public void updateSpiel(long id, int heimtore, int auswaertstore){
+        Spiel spiel = this.spielRepository.findById(id).orElse(null);
+        spiel.updateSpiel(heimtore, auswaertstore);
     }
 }
