@@ -10,6 +10,8 @@ import wasserballturnier.api.services.GruppeService;
 import wasserballturnier.api.services.MannschaftService;
 import wasserballturnier.api.services.SpielService;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -27,8 +29,8 @@ public class VerwaltungController {
         this.spielService = spielService;
     }
 
-    @PutMapping("/addMannschaft")
-    public void addMannschaft(@RequestBody String mannschaftsname){
+    @PutMapping("/addMannschaft/{mannschaftsname}")
+    public void addMannschaft(@RequestParam("mannschaftsname") String mannschaftsname){
         this.mannschaftService.addMannschaft(new Mannschaft(mannschaftsname));
     }
 
@@ -50,5 +52,15 @@ public class VerwaltungController {
     @GetMapping("/getMannschaften")
     public List<Mannschaft> getMannschaften(){
         return this.mannschaftService.getMannschaften();
+    }
+
+    public ArrayList<List<Mannschaft>> shuffleMannschaften(int gruppengroesse){
+        List<Mannschaft> alleMannschaften = this.mannschaftService.getMannschaften();
+        Collections.shuffle(alleMannschaften);
+        ArrayList<List<Mannschaft>> gruppen = new ArrayList<>();
+        while (!alleMannschaften.isEmpty()){
+            gruppen.add(alleMannschaften.subList(0, gruppengroesse));
+        }
+        return gruppen;
     }
 }
