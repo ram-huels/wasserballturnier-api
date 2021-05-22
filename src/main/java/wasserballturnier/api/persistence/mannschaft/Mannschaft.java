@@ -1,7 +1,5 @@
 package wasserballturnier.api.persistence.mannschaft;
 
-import org.springframework.stereotype.Component;
-
 import javax.persistence.*;
 
 @Entity
@@ -21,7 +19,7 @@ public class Mannschaft {
     private int anzahlSiege = 0;
 
     @Column()
-    private int anzahlUnterschieden = 0;
+    private int anzahlUnentschieden = 0;
 
     @Column()
     private int anzahlNiederlagen = 0;
@@ -70,12 +68,12 @@ public class Mannschaft {
         this.anzahlSiege += 1;
     }
 
-    public int getAnzahlUnterschieden() {
-        return anzahlUnterschieden;
+    public int getAnzahlUnentschieden() {
+        return anzahlUnentschieden;
     }
 
     public void setAnzahlUnterschieden() {
-        this.anzahlUnterschieden += 1;
+        this.anzahlUnentschieden += 1;
     }
 
     public int getAnzahlNiederlagen() {

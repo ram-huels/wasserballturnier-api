@@ -30,7 +30,7 @@ public class VerwaltungController {
     }
 
     @PutMapping("/addMannschaft/{mannschaftsname}")
-    public void addMannschaft(@RequestParam("mannschaftsname") String mannschaftsname){
+    public void addMannschaft(@RequestParam("mannschaftsname") String mannschaftsname) {
         this.mannschaftService.addMannschaft(new Mannschaft(mannschaftsname));
     }
 

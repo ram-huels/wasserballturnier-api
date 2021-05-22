@@ -1,0 +1,221 @@
+openapi: 3.0.1
+info:
+  description: "This is the API for a waterpolo tournament."
+  version: "1.0.0"
+  title: "Wasserballturnier-Api"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "ram.huels@gmail.com"
+paths:
+  /mannschaft:
+    put:
+      tags:
+        - Mannschaften
+      summary: Speichert eine Mannschaft
+      description: 'Wenn eine ID im Request-Body gesetzt ist, dann wird eine bestehende Mannschaft aktualisiert; ansonsten wird eine neue Mannschaft erstellt'
+      operationId: mannschaftPut
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MannschaftPushTO'
+        required: true
+      responses:
+        '200':
+          description: Die Mannschaft wurde erfolgreich gespeichert
+        '400':
+          description: 'Ein Feld oder mehrere Felder der Mannschaft sind ungültig'
+        '404':
+          description: Die im Request-Body angegebene ID konnte keiner Rechnung zugeordnet werden
+    post:
+      tags:
+        - Mannschaften
+      summary: 'Gibt alle Mannschaften zurück'
+      operationId: mannschaftenPost
+      responses:
+        '200':
+          description: Es werden alle Mannschaften zurückgegeben
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MannschaftArrayTO'
+  /gruppe:
+    put:
+      tags:
+        - Gruppen
+      summary: Speichert eine Gruppe
+      description: 'Wenn eine ID im Request-Body gesetzt ist, dann wird eine bestehende Gruppe aktualisiert; ansonsten wird eine neue Gruppe erstellt'
+      operationId: gruppenPut
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GruppePushTO'
+        required: true
+      responses:
+        '200':
+          description: Die Gruppe wurde erfolgreich gespeichert
+        '400':
+          description: 'Ein Feld oder mehrere Felder sind ungültig'
+        '404':
+          description: Die im Request-Body angegebene ID konnte keiner Gruppe zugeordnet werden
+    post:
+      tags:
+        - Gruppen
+      summary: Gibt alle Gruppen zurück
+      description: 'Gibt alle Gruppen zurück'
+      operationId: gruppenPost
+      responses:
+        '200':
+          description: Es werden alle Gruppen zurückgegeben
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GruppenArrayTO'
+  /spiele/halbfinale:
+    post:
+      tags:
+        - Spiele
+      summary: Gibt alle Halbfinale zurück
+      description: 'Gibt alle Halbfinale vom Turnier zurück'
+      operationId: halbfinalePost
+      responses:
+        '200':
+          description: Es werden alle Halbfinals zurückgegeben
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SpielArrayTO'
+  /spiele/finale:
+    post:
+      tags:
+        - Spiele
+      summary: Gibt das Finale zurück
+      description: 'Gibt das Finale des Turniers zurück'
+      operationId: finalePost
+      responses:
+        '200':
+          description: Es wird das Finale zurückgegeben
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SpielTO'
+components:
+  schemas:
+    MannschaftPushTO:
+      type: object
+      properties:
+        id:
+          type: number
+          description: Die vom BackEnd vergebene ID einer Mannschaft
+        mannschaftsname:
+          type: string
+          description: Name der Mannschaft
+    MannschaftTO:
+      type: object
+      properties:
+        id:
+          type: number
+          description: Die vom BackEnd vergebene ID einer Mannschaft
+        mannschaftsname:
+          type: string
+          description: Name der Mannschaft
+        anzahlSpiele:
+          type: number
+          description: Anzahl der Spiele einer Mannschaft
+        anzahlSiege:
+          type: number
+          description: Anzahl der Siege einer Mannschaft
+        anzahlUnentschieden:
+          type: number
+          description: Anzahl der Unentschieden einer Mannschaft
+        anzahlNiederlagen:
+          type: number
+          description: Anzahl der Niederlagen einer Mannschaft
+        tore:
+          type: number
+          description: Anzahl der gesamten Tore einer Mannschaft
+        gegentore:
+          type: number
+          description: Anzahl der gesamten Gegentore einer Mannschaft
+        punkte:
+          type: number
+          description: Anzahl der Punkte einer Mannschaft
+    MannschaftArrayTO:
+      type: object
+      properties:
+        mannschaften:
+          type: array
+          items:
+            $ref: '#/components/schemas/MannschaftTO'
+    GruppePushTO:
+      type: object
+      properties:
+        id:
+          type: number
+          description: Die vom BackEnd vergebene ID einer Gruppe
+        gruppenbezeichung:
+          type: string
+          description: Name der Gruppe
+        mannschaftList:
+          type: array
+          description: Eine Liste von Mannschaften in der Gruppe
+          items:
+            $ref: '#/components/schemas/MannschaftTO'
+    GruppeTO:
+      type: object
+      properties:
+        id:
+          type: number
+          description: Die vom BackEnd vergebene ID einer Gruppe
+        gruppenbezeichung:
+          type: string
+          description: Name der Gruppe
+        mannschaftList:
+          type: array
+          description: Eine Liste von Mannschaften in der Gruppe
+          items:
+            $ref: '#/components/schemas/MannschaftTO'
+        spieleList:
+          type: array
+          description: Eine Liste aller Spiele in der Gruppe
+          items:
+            $ref: '#/components/schemas/SpielTO'
+    GruppenArrayTO:
+      type: object
+      properties:
+        gruppen:
+          type: array
+          description: Eine Liste von Gruppen
+          items:
+            $ref: '#/components/schemas/GruppeTO'
+    SpielTO:
+      type: object
+      properties:
+        id:
+          type: number
+          description: Die vom BackEnd vergebene ID eines Spieles
+        heimmanschaft:
+          $ref: '#/components/schemas/MannschaftTO'
+        auswaertsmannschaft:
+          $ref: '#/components/schemas/MannschaftTO'
+        heimtore:
+          type: number
+          description: Anzahl der Heimtore
+        auswaertstore:
+          type: number
+          description: Anzahl der Auswaertstore
+        status:
+          type: string
+          enum:
+            - GRUPPENSPIEL
+            - HALBFINALE
+            - FINALE
+    SpielArrayTO:
+      type: object
+      properties:
+        spiele:
+          type: array
+          description: Eine Liste von Spielen
+          items:
+            $ref: '#/components/schemas/SpielTO'
