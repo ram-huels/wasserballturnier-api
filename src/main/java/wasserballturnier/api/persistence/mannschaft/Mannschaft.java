@@ -7,7 +7,7 @@ public class Mannschaft {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private int id;
 
     @Column()
     private String mannschaftsname;
@@ -40,7 +40,7 @@ public class Mannschaft {
 
     protected Mannschaft() {}
 
-    public long getId() {
+    public Integer getId() {
         return id;
     }
 

@@ -3,3 +3,9 @@ spring:
     show-sql: true
   datasource:
     data: classpath*:data.sql
+
+springfox:
+  documentation:
+    open-api:
+      v3:
+        path: /api-docs

@@ -72,6 +72,23 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GruppenArrayTO'
+  /gruppe/automatic/{gruppenGroesse}:
+    put:
+      parameters:
+        - in: path
+          name: gruppenGroesse
+          schema:
+            type: integer
+          required: true
+          description: Groesse der Gruppen bei der Generation
+      tags:
+        - Gruppen
+      summary: Autogeneriert Gruppen
+      operationId: gruppenAutomatic
+      description: 'Generiert alle Gruppen automatisch'
+      responses:
+        '200':
+          description: Es wurden alle Gruppen generiert
   /spiele/halbfinale:
     post:
       tags:

@@ -1,6 +1,8 @@
 package wasserballturnier.api.services;
 
 import org.springframework.stereotype.Service;
+import wasserballturnier.api.generated.model.SpielTO;
+import wasserballturnier.api.persistence.mannschaft.Mannschaft;
 import wasserballturnier.api.persistence.spiel.Spiel;
 import wasserballturnier.api.persistence.spiel.SpielRepository;
 
@@ -26,5 +28,9 @@ public class SpielService {
     public void updateSpiel(long id, int heimtore, int auswaertstore){
         Spiel spiel = this.spielRepository.findById(id).orElse(null);
         spiel.updateSpiel(heimtore, auswaertstore);
+    }
+
+    public SpielTO getFinale(){
+        return new SpielTO();
     }
 }

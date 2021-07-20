@@ -15,8 +15,9 @@ public class MannschaftService {
         this.mannschaftRepository = mannschaftRepository;
     }
 
-    public void addMannschaft(Mannschaft mannschaft){
+    public Integer addMannschaft(Mannschaft mannschaft){
         this.mannschaftRepository.save(mannschaft);
+        return mannschaft.getId();
     }
 
     public List<Mannschaft> getMannschaften(){
