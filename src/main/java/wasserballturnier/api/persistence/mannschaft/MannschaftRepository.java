@@ -7,4 +7,6 @@ import java.util.List;
 public interface MannschaftRepository extends CrudRepository<Mannschaft, Long> {
 
     List<Mannschaft> findAll();
+
+    List<Mannschaft> findAllByMannschaftsklasse(Mannschaftsklasse mannschaftsklasse);
 }

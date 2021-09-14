@@ -47,11 +47,11 @@ public class MannschaftApiController implements MannschaftApi {
     }
 
     public ResponseEntity<Integer> mannschaftPut(@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody MannschaftPushTO body) {
-        return ResponseEntity.ok(mannschaftService.addMannschaft(new Mannschaft(body.getMannschaftsname())));
+        return ResponseEntity.ok(mannschaftService.addMannschaft(body));
     }
 
-    public ResponseEntity<MannschaftArrayTO> mannschaftenPost() {
-        return new ResponseEntity<MannschaftArrayTO>(HttpStatus.NOT_IMPLEMENTED);
+    public ResponseEntity<List<Mannschaft>> mannschaftenPost() {
+        return ResponseEntity.ok(mannschaftService.getMannschaften());
     }
 
 }

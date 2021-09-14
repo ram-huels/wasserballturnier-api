@@ -12,7 +12,7 @@ public class Gruppe {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long gruppeId;
+    private Integer gruppeId;
 
     @Column()
     private String gruppenbezeichnung;
@@ -27,11 +27,13 @@ public class Gruppe {
         this.gruppenbezeichnung = gruppenbezeichnung;
     }
 
-    protected Gruppe() {}
+    public Gruppe() {}
 
-    public long getGruppeId() {
+    public Integer getGruppeId() {
         return gruppeId;
     }
+
+    public void setGruppeId(Integer gruppeId) {this.gruppeId = gruppeId;}
 
     public String getGruppenbezeichnung() {
         return gruppenbezeichnung;

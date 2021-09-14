@@ -18,12 +18,12 @@ import javax.validation.constraints.*;
 
 public class MannschaftPushTO   {
   @JsonProperty("id")
-  private BigDecimal id = null;
+  private Integer id = null;
 
   @JsonProperty("mannschaftsname")
   private String mannschaftsname = null;
 
-  public MannschaftPushTO id(BigDecimal id) {
+  public MannschaftPushTO id(Integer id) {
     this.id = id;
     return this;
   }
@@ -35,11 +35,11 @@ public class MannschaftPushTO   {
   @Schema(description = "Die vom BackEnd vergebene ID einer Mannschaft")
   
     @Valid
-    public BigDecimal getId() {
+    public Integer getId() {
     return id;
   }
 
-  public void setId(BigDecimal id) {
+  public void setId(Integer id) {
     this.id = id;
   }
 

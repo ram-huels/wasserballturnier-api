@@ -28,6 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.bind.annotation.CookieValue;
 import wasserballturnier.api.generated.model.GruppePushTO;
 import wasserballturnier.api.generated.model.GruppenArrayTO;
+import wasserballturnier.api.persistence.gruppe.Gruppe;
 
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -51,7 +52,7 @@ public interface GruppeApi {
     @RequestMapping(value = "/gruppe",
         produces = { "application/json" }, 
         method = RequestMethod.POST)
-    ResponseEntity<GruppenArrayTO> gruppenPost();
+    ResponseEntity<List<Gruppe>> gruppenPost();
 
 
     @Operation(summary = "Speichert eine Gruppe", description = "Wenn eine ID im Request-Body gesetzt ist, dann wird eine bestehende Gruppe aktualisiert; ansonsten wird eine neue Gruppe erstellt", tags={ "Gruppen" })

@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import wasserballturnier.api.generated.model.GruppePushTO;
 import wasserballturnier.api.generated.model.GruppenArrayTO;
+import wasserballturnier.api.persistence.gruppe.Gruppe;
 import wasserballturnier.api.services.GruppeService;
 
 import javax.validation.constraints.*;
@@ -46,11 +47,12 @@ public class GruppeApiController implements GruppeApi {
     }
 
     public ResponseEntity<Void> gruppenAutomatic(@Parameter(in = ParameterIn.PATH, description = "Groesse der Gruppen bei der Generation", required=true, schema=@Schema()) @PathVariable("gruppenGroesse") Integer gruppenGroesse) {
-        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+        this.gruppeService.randomGruppen(gruppenGroesse);
+        return ResponseEntity.ok().build();
     }
 
-    public ResponseEntity<GruppenArrayTO> gruppenPost() {
-        return new ResponseEntity<GruppenArrayTO>(HttpStatus.NOT_IMPLEMENTED);
+    public ResponseEntity<List<Gruppe>> gruppenPost() {
+        return ResponseEntity.ok(this.gruppeService.getGruppen());
     }
 
     public ResponseEntity<Void> gruppenPut(@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody GruppePushTO body) {

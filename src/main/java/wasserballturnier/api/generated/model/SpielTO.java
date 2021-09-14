@@ -8,7 +8,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.math.BigDecimal;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
-import javax.validation.constraints.*;
 
 /**
  * SpielTO
@@ -34,39 +33,10 @@ public class SpielTO   {
   private BigDecimal auswaertstore = null;
 
   /**
-   * Gets or Sets status
+   * Gets or Sets spielwert
    */
-  public enum StatusEnum {
-    GRUPPENSPIEL("GRUPPENSPIEL"),
-    
-    HALBFINALE("HALBFINALE"),
-    
-    FINALE("FINALE");
-
-    private String value;
-
-    StatusEnum(String value) {
-      this.value = value;
-    }
-
-    @Override
-    @JsonValue
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    @JsonCreator
-    public static StatusEnum fromValue(String text) {
-      for (StatusEnum b : StatusEnum.values()) {
-        if (String.valueOf(b.value).equals(text)) {
-          return b;
-        }
-      }
-      return null;
-    }
-  }
-  @JsonProperty("status")
-  private StatusEnum status = null;
+  @JsonProperty("spielwert")
+  private Spielwert spielwert = null;
 
   public SpielTO id(BigDecimal id) {
     this.id = id;
@@ -168,23 +138,23 @@ public class SpielTO   {
     this.auswaertstore = auswaertstore;
   }
 
-  public SpielTO status(StatusEnum status) {
-    this.status = status;
+  public SpielTO spielwert(Spielwert spielwert) {
+    this.spielwert = spielwert;
     return this;
   }
 
   /**
-   * Get status
-   * @return status
+   * Get spielwert
+   * @return spielwert
    **/
   @Schema(description = "")
   
-    public StatusEnum getStatus() {
-    return status;
+    public Spielwert getSpielwert() {
+    return spielwert;
   }
 
-  public void setStatus(StatusEnum status) {
-    this.status = status;
+  public void setSpielwert(Spielwert spielwert) {
+    this.spielwert = spielwert;
   }
 
 
@@ -202,12 +172,12 @@ public class SpielTO   {
         Objects.equals(this.auswaertsmannschaft, spielTO.auswaertsmannschaft) &&
         Objects.equals(this.heimtore, spielTO.heimtore) &&
         Objects.equals(this.auswaertstore, spielTO.auswaertstore) &&
-        Objects.equals(this.status, spielTO.status);
+        Objects.equals(this.spielwert, spielTO.spielwert);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, heimmanschaft, auswaertsmannschaft, heimtore, auswaertstore, status);
+    return Objects.hash(id, heimmanschaft, auswaertsmannschaft, heimtore, auswaertstore, spielwert);
   }
 
   @Override
@@ -220,7 +190,7 @@ public class SpielTO   {
     sb.append("    auswaertsmannschaft: ").append(toIndentedString(auswaertsmannschaft)).append("\n");
     sb.append("    heimtore: ").append(toIndentedString(heimtore)).append("\n");
     sb.append("    auswaertstore: ").append(toIndentedString(auswaertstore)).append("\n");
-    sb.append("    status: ").append(toIndentedString(status)).append("\n");
+    sb.append("    spielwert: ").append(toIndentedString(spielwert)).append("\n");
     sb.append("}");
     return sb.toString();
   }

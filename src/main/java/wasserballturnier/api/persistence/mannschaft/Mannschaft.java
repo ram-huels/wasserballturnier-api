@@ -7,10 +7,13 @@ public class Mannschaft {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @Column()
     private String mannschaftsname;
+
+    @Column
+    private Mannschaftsklasse mannschaftsklasse;
 
     @Column()
     private int anzahlSpiele = 0;
@@ -33,16 +36,19 @@ public class Mannschaft {
     @Column()
     private int punkte = 0;
 
-    public Mannschaft(String mannschaftsname) {
+    public Mannschaft(String mannschaftsname, int mannschaftsklasse) {
         super();
         this.mannschaftsname = mannschaftsname;
+        this.mannschaftsklasse = Mannschaftsklasse.assertMannschaftsklasse(mannschaftsklasse);
     }
 
-    protected Mannschaft() {}
+    public Mannschaft() {}
 
     public Integer getId() {
         return id;
     }
+
+    public void setId(final Integer id) {this.id = id;}
 
     public String getMannschaftsname() {
         return mannschaftsname;
@@ -50,6 +56,14 @@ public class Mannschaft {
 
     public void setMannschaftsname(String mannschaftsname) {
         this.mannschaftsname = mannschaftsname;
+    }
+
+    public Mannschaftsklasse getMannschaftsklasse() {
+        return mannschaftsklasse;
+    }
+
+    public void setMannschaftsklasse(Mannschaftsklasse mannschaftsklasse) {
+        this.mannschaftsklasse = mannschaftsklasse;
     }
 
     public int getAnzahlSpiele() {

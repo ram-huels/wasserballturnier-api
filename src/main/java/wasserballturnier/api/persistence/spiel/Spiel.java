@@ -2,6 +2,7 @@ package wasserballturnier.api.persistence.spiel;
 
 import com.sun.istack.NotNull;
 import org.springframework.stereotype.Component;
+import wasserballturnier.api.generated.model.Spielwert;
 import wasserballturnier.api.persistence.gruppe.Gruppe;
 import wasserballturnier.api.persistence.mannschaft.Mannschaft;
 
@@ -12,7 +13,7 @@ public class Spiel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long spielId;
+    private Integer spielId;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Mannschaft heimmannschaft;
@@ -26,17 +27,21 @@ public class Spiel {
     @Column()
     private int auswaertstore = 0;
 
-    public Spiel(Mannschaft heimmannschaft, Mannschaft auswaertsmannschaft) {
+    private Spielwert spielwert;
+
+    public Spiel(Mannschaft heimmannschaft, Mannschaft auswaertsmannschaft, Spielwert spielwert) {
         super();
         this.heimmannschaft = heimmannschaft;
         this.auswaertsmannschaft = auswaertsmannschaft;
     }
 
-    protected Spiel() {}
+    public Spiel() {}
 
-    public long getSpielId() {
+    public Integer getSpielId() {
         return spielId;
     }
+
+    public void setSpielId(Integer spielId) {this.spielId = spielId;}
 
     public Mannschaft getHeimmannschaft() {
         return heimmannschaft;
@@ -60,6 +65,22 @@ public class Spiel {
 
     public int getAuswaertstore() {
         return auswaertstore;
+    }
+
+    public void setHeimtore(int heimtore) {
+        this.heimtore = heimtore;
+    }
+
+    public void setAuswaertstore(int auswaertstore) {
+        this.auswaertstore = auswaertstore;
+    }
+
+    public Spielwert getSpielwert() {
+        return spielwert;
+    }
+
+    public void setSpielwert(Spielwert spielwert) {
+        this.spielwert = spielwert;
     }
 
     public void updateSpiel(int heimtore, int auswaertstore) {
