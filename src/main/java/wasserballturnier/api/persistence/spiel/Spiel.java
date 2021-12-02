@@ -96,6 +96,10 @@ public class Spiel {
         this.protokoll = protokoll;
     }
 
+    public Mannschaft getSieger() {
+        return heimtore > auswaertstore ? heimmannschaft : auswaertsmannschaft;
+    }
+
     public void updateSpiel(int heimtore, int auswaertstore) {
         this.heimtore = heimtore;
         this.auswaertstore = auswaertstore;
