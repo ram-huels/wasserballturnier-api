@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.math.BigDecimal;
 import org.springframework.validation.annotation.Validated;
+import wasserballturnier.api.persistence.mannschaft.Mannschaftsklasse;
+
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
@@ -22,6 +24,9 @@ public class MannschaftTO   {
 
   @JsonProperty("mannschaftsname")
   private String mannschaftsname = null;
+
+  @JsonProperty("mannschaftsklasse")
+  private Mannschaftsklasse mannschaftsklasse = null;
 
   @JsonProperty("anzahlSpiele")
   private BigDecimal anzahlSpiele = null;
@@ -66,6 +71,25 @@ public class MannschaftTO   {
 
   public MannschaftTO mannschaftsname(String mannschaftsname) {
     this.mannschaftsname = mannschaftsname;
+    return this;
+  }
+
+  /**
+   * Name der Mannschaft
+   * @return mannschaftsname
+   **/
+  @Schema(description = "Klasse der Mannschafts")
+
+  public Mannschaftsklasse getMannschaftsklasse() {
+    return mannschaftsklasse;
+  }
+
+  public void setMannschaftsklasse(Mannschaftsklasse mannschaftsklasse) {
+    this.mannschaftsklasse = mannschaftsklasse;
+  }
+
+  public MannschaftTO mannschaftsklasse(Mannschaftsklasse mannschaftsklasse) {
+    this.mannschaftsklasse = mannschaftsklasse;
     return this;
   }
 
@@ -234,7 +258,7 @@ public class MannschaftTO   {
     }
     MannschaftTO mannschaftTO = (MannschaftTO) o;
     return Objects.equals(this.id, mannschaftTO.id) &&
-        Objects.equals(this.mannschaftsname, mannschaftTO.mannschaftsname) &&
+        Objects.equals(this.mannschaftsname, mannschaftTO.mannschaftsname) && Objects.equals(this.mannschaftsklasse, mannschaftTO.mannschaftsklasse) &&
         Objects.equals(this.anzahlSpiele, mannschaftTO.anzahlSpiele) &&
         Objects.equals(this.anzahlSiege, mannschaftTO.anzahlSiege) &&
         Objects.equals(this.anzahlUnentschieden, mannschaftTO.anzahlUnentschieden) &&
@@ -246,7 +270,7 @@ public class MannschaftTO   {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, mannschaftsname, anzahlSpiele, anzahlSiege, anzahlUnentschieden, anzahlNiederlagen, tore, gegentore, punkte);
+    return Objects.hash(id, mannschaftsname, mannschaftsklasse, anzahlSpiele, anzahlSiege, anzahlUnentschieden, anzahlNiederlagen, tore, gegentore, punkte);
   }
 
   @Override
@@ -256,6 +280,7 @@ public class MannschaftTO   {
     
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    mannschaftsname: ").append(toIndentedString(mannschaftsname)).append("\n");
+    sb.append("    mannschaftsklasse: ").append(toIndentedString(mannschaftsklasse)).append("\n");
     sb.append("    anzahlSpiele: ").append(toIndentedString(anzahlSpiele)).append("\n");
     sb.append("    anzahlSiege: ").append(toIndentedString(anzahlSiege)).append("\n");
     sb.append("    anzahlUnentschieden: ").append(toIndentedString(anzahlUnentschieden)).append("\n");

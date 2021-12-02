@@ -4,9 +4,10 @@ import org.springframework.stereotype.Service;
 import wasserballturnier.api.persistence.gruppe.Gruppe;
 import wasserballturnier.api.persistence.gruppe.GruppeRepository;
 import wasserballturnier.api.persistence.mannschaft.Mannschaft;
-import wasserballturnier.api.persistence.spiel.Spiel;
+import wasserballturnier.api.persistence.mannschaft.Mannschaftsklasse;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -29,7 +30,24 @@ public class GruppeService {
     }
 
     public List<Gruppe> getGruppen(){
-        return this.gruppeRepository.findAll();
+        List<Gruppe> toBeSorted = this.gruppeRepository.findAll();
+
+        // Check if it works
+        for (Gruppe g: toBeSorted) {
+            g.getMannschaftList().sort(Comparator.comparing(Mannschaft::getPunkte)
+                    .thenComparing(Mannschaft::getTore)
+                    .thenComparing(Mannschaft::getGegentore));
+        }
+
+        return toBeSorted;
+    }
+
+    public List<Gruppe> getXGruppen(Mannschaftsklasse mannschaftsklasse) {
+        List<Gruppe> alleGruppen = getGruppen();
+
+        alleGruppen.removeIf(gruppe -> gruppe.getMannschaftList().get(0).getMannschaftsklasse() != mannschaftsklasse);
+
+        return alleGruppen;
     }
 
     public void randomGruppen(int gruppengroesse) {
@@ -46,10 +64,11 @@ public class GruppeService {
                 } else {
                     gruppe.setMannschaftList(mannschaftenToBeGroups.subList(i, mannschaftenToBeGroups.size()));
                 }
-                addGruppe(gruppe);
 
-                // this.spielService.createSpiele(gruppe);
+                addGruppe(gruppe);
             }
         }
+
+        this.spielService.createGruppenSpiele(this.gruppeRepository.findAll());
     }
 }

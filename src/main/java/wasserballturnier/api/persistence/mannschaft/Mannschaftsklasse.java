@@ -1,26 +1,34 @@
 package wasserballturnier.api.persistence.mannschaft;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+import wasserballturnier.api.generated.model.Spielwert;
+
 public enum Mannschaftsklasse {
 
-    HERREN(0),
-    DAMEN(1),
-    JUGEND(2);
+    HERREN("HERREN"),
+    DAMEN("DAMEN"),
+    JUGEND("JUGEND");
 
-    private int value;
+    private String value;
 
-    private Mannschaftsklasse(int value) {
+    Mannschaftsklasse(String value) {
         this.value = value;
     }
 
-    public static Mannschaftsklasse assertMannschaftsklasse(int mannschaftsklasse) {
-        if (mannschaftsklasse == 0){
-            return Mannschaftsklasse.HERREN;
-        } else {
-            return mannschaftsklasse == 1 ? Mannschaftsklasse.DAMEN : Mannschaftsklasse.JUGEND;
-        }
+    @Override
+    @JsonValue
+    public String toString() {
+        return String.valueOf(value);
     }
 
-    public String toString() {
-        return String.valueOf(this.value);
+    @JsonCreator
+    public static Mannschaftsklasse fromValue(String text) {
+        for (Mannschaftsklasse b : Mannschaftsklasse.values()) {
+            if (String.valueOf(b.value).equals(text)) {
+                return b;
+            }
+        }
+        return null;
     }
 }

@@ -1,12 +1,11 @@
 package wasserballturnier.api.persistence.spiel;
 
-import com.sun.istack.NotNull;
-import org.springframework.stereotype.Component;
+import com.sun.istack.Nullable;
 import wasserballturnier.api.generated.model.Spielwert;
-import wasserballturnier.api.persistence.gruppe.Gruppe;
 import wasserballturnier.api.persistence.mannschaft.Mannschaft;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 public class Spiel {
@@ -27,12 +26,18 @@ public class Spiel {
     @Column()
     private int auswaertstore = 0;
 
+    @Column
     private Spielwert spielwert;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @Nullable
+    private Mannschaft protokoll;
 
     public Spiel(Mannschaft heimmannschaft, Mannschaft auswaertsmannschaft, Spielwert spielwert) {
         super();
         this.heimmannschaft = heimmannschaft;
         this.auswaertsmannschaft = auswaertsmannschaft;
+        this.spielwert = spielwert;
     }
 
     public Spiel() {}
@@ -83,6 +88,14 @@ public class Spiel {
         this.spielwert = spielwert;
     }
 
+    public Mannschaft getProtokoll() {
+        return protokoll;
+    }
+
+    public void setProtokoll(Mannschaft protokoll) {
+        this.protokoll = protokoll;
+    }
+
     public void updateSpiel(int heimtore, int auswaertstore) {
         this.heimtore = heimtore;
         this.auswaertstore = auswaertstore;
@@ -102,7 +115,7 @@ public class Spiel {
             this.auswaertsmannschaft.setPunkte(3);
         } else {
             this.heimmannschaft.setAnzahlUnterschieden();
-            this.auswaertsmannschaft.setPunkte(1);
+            this.heimmannschaft.setPunkte(1);
             this.auswaertsmannschaft.setAnzahlUnterschieden();
             this.auswaertsmannschaft.setPunkte(1);
         }

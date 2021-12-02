@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonValue;
 public enum Spielwert {
     GRUPPENSPIEL("GRUPPENSPIEL"),
 
+    VIERTELFINALE("VIERTELFINALE"),
+
     HALBFINALE("HALBFINALE"),
 
     FINALE("FINALE");

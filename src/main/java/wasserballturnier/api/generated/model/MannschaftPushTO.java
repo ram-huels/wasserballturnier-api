@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.math.BigDecimal;
 import org.springframework.validation.annotation.Validated;
+import wasserballturnier.api.persistence.mannschaft.Mannschaftsklasse;
+
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
@@ -22,6 +24,9 @@ public class MannschaftPushTO   {
 
   @JsonProperty("mannschaftsname")
   private String mannschaftsname = null;
+
+  @JsonProperty("mannschaftsklasse")
+  private Mannschaftsklasse mannschaftsklasse = null;
 
   public MannschaftPushTO id(Integer id) {
     this.id = id;
@@ -62,6 +67,20 @@ public class MannschaftPushTO   {
     this.mannschaftsname = mannschaftsname;
   }
 
+  /**
+   * Name der Mannschaft
+   * @return mannschaftsname
+   **/
+  @Schema(description = "Klasse der Mannschaft")
+
+  public Mannschaftsklasse getMannschaftsklasse() {
+    return mannschaftsklasse;
+  }
+
+  public void setMannschaftsklasse(Mannschaftsklasse mannschaftsklasse) {
+    this.mannschaftsklasse = mannschaftsklasse;
+  }
+
 
   @Override
   public boolean equals(Object o) {
@@ -73,12 +92,12 @@ public class MannschaftPushTO   {
     }
     MannschaftPushTO mannschaftPushTO = (MannschaftPushTO) o;
     return Objects.equals(this.id, mannschaftPushTO.id) &&
-        Objects.equals(this.mannschaftsname, mannschaftPushTO.mannschaftsname);
+        Objects.equals(this.mannschaftsname, mannschaftPushTO.mannschaftsname) && Objects.equals(this.mannschaftsklasse, mannschaftPushTO.mannschaftsklasse);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, mannschaftsname);
+    return Objects.hash(id, mannschaftsname, mannschaftsklasse);
   }
 
   @Override
@@ -88,6 +107,7 @@ public class MannschaftPushTO   {
     
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    mannschaftsname: ").append(toIndentedString(mannschaftsname)).append("\n");
+    sb.append("    mannschaftsklasse: ").append(toIndentedString(mannschaftsklasse)).append("\n");
     sb.append("}");
     return sb.toString();
   }

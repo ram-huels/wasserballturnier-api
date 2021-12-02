@@ -36,10 +36,10 @@ public class Mannschaft {
     @Column()
     private int punkte = 0;
 
-    public Mannschaft(String mannschaftsname, int mannschaftsklasse) {
+    public Mannschaft(String mannschaftsname, String mannschaftsklasse) {
         super();
         this.mannschaftsname = mannschaftsname;
-        this.mannschaftsklasse = Mannschaftsklasse.assertMannschaftsklasse(mannschaftsklasse);
+        this.mannschaftsklasse = Mannschaftsklasse.fromValue(mannschaftsklasse);
     }
 
     public Mannschaft() {}

@@ -11,7 +11,7 @@ public class EnumTest {
 
     @Test
     public void testEnumMannschaftsklasse(){
-        Mannschaft mannschaft = new Mannschaft("Test", 0);
+        Mannschaft mannschaft = new Mannschaft("Test", "HERREN");
         assertEquals(Mannschaftsklasse.HERREN, mannschaft.getMannschaftsklasse());
         assertEquals("Test", mannschaft.getMannschaftsname());
     }
