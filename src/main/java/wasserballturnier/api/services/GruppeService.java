@@ -34,7 +34,9 @@ public class GruppeService {
 
         // Check if it works
         for (Gruppe g: toBeSorted) {
+            // Sorting list after Punkte, Tordifferenz, Tore and Gegentore in descending weight
             g.getMannschaftList().sort(Comparator.comparing(Mannschaft::getPunkte)
+                    .thenComparing(m -> m.getTore() - m.getGegentore())
                     .thenComparing(Mannschaft::getTore)
                     .thenComparing(Mannschaft::getGegentore));
         }
