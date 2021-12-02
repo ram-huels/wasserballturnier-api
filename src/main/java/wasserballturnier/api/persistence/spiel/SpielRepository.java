@@ -10,7 +10,7 @@ public interface SpielRepository extends CrudRepository<Spiel, Long> {
 
     List<Spiel> findAll();
 
-    Spiel findBySpielwertAndHeimmannschaft_Mannschaftsklasse(Mannschaftsklasse mannschaftsklasse);
+    Spiel findBySpielwertAndHeimmannschaft_Mannschaftsklasse(Spielwert spielwert, Mannschaftsklasse mannschaftsklasse);
 
     List<Spiel> findAllBySpielwertAndHeimmannschaft_Mannschaftsklasse(Spielwert spielwert, Mannschaftsklasse mannschaftsklasse);
 }

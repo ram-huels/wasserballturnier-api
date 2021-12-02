@@ -1,11 +1,15 @@
 package wasserballturnier.api.services;
 
 import org.springframework.stereotype.Service;
+import wasserballturnier.api.generated.model.Spielwert;
 import wasserballturnier.api.persistence.gruppe.Gruppe;
 import wasserballturnier.api.persistence.gruppe.GruppeRepository;
 import wasserballturnier.api.persistence.mannschaft.Mannschaft;
 import wasserballturnier.api.persistence.mannschaft.Mannschaftsklasse;
+import wasserballturnier.api.persistence.spiel.Spiel;
+import wasserballturnier.api.persistence.spiel.SpielRepository;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -17,12 +21,12 @@ public class GruppeService {
 
     private MannschaftService mannschaftService;
 
-    private SpielService spielService;
+    private SpielRepository spielRepository;
 
-    public GruppeService(GruppeRepository gruppeRepository, MannschaftService mannschaftService, SpielService spielService) {
+    public GruppeService(GruppeRepository gruppeRepository, MannschaftService mannschaftService, SpielRepository spielRepository) {
         this.gruppeRepository = gruppeRepository;
         this.mannschaftService = mannschaftService;
-        this.spielService = spielService;
+        this.spielRepository = spielRepository;
     }
 
     public void addGruppe(Gruppe gruppe){
@@ -71,6 +75,34 @@ public class GruppeService {
             }
         }
 
-        this.spielService.createGruppenSpiele(this.gruppeRepository.findAll());
+        createGruppenSpiele();
+    }
+
+    /*
+Diese Methode erzeugt alle Spiel ohne Reihenfolge für eine Gruppe
+ */
+    public void createGruppenSpiele(){
+
+        List<Gruppe> gruppen = this.gruppeRepository.findAll();
+
+        for (Gruppe gruppe: gruppen) {
+
+            List<Spiel> spielList = new ArrayList<>();
+
+            for(int i = 0; i < gruppe.getMannschaftList().size(); i++){
+                for (int j = i+1; j < gruppe.getMannschaftList().size(); j++){
+                    // Alle Spiele einer Gruppe ohne Sortierung
+                    spielList.add(new Spiel(gruppe.getMannschaftList().get(i), gruppe.getMannschaftList().get(j), Spielwert.GRUPPENSPIEL));
+                }
+            }
+
+            // Spiele speichern
+            for (Spiel spiel: spielList) {
+                this.spielRepository.save(spiel);
+            }
+
+            // Spiele der Gruppe hinzufügen
+            gruppe.setSpielList(spielList);
+        }
     }
 }

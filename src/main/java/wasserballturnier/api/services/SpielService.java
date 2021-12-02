@@ -45,7 +45,7 @@ public class SpielService {
     }
 
     public Spiel getFinale(Mannschaftsklasse mannschaftsklasse){
-        return this.spielRepository.findBySpielwertAndHeimmannschaft_Mannschaftsklasse(mannschaftsklasse);
+        return this.spielRepository.findBySpielwertAndHeimmannschaft_Mannschaftsklasse(Spielwert.FINALE, mannschaftsklasse);
     }
 
     public List<Mannschaft> sortMannschaftsList(List<Mannschaft> toBeSorted) {
@@ -64,32 +64,6 @@ public class SpielService {
     ------------------------------------------------------------------------\____|_|  \___|\__,_|\__|_|\___/|_| |_|-----------------------------------------------------------------------------------------
     -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
      */
-
-    /*
-    Diese Methode erzeugt alle Spiel ohne Reihenfolge für eine Gruppe
-     */
-    public void createGruppenSpiele(List<Gruppe> gruppen){
-
-        for (Gruppe gruppe: gruppen) {
-
-            List<Spiel> spielList = new ArrayList<>();
-
-            for(int i = 0; i < gruppe.getMannschaftList().size(); i++){
-                for (int j = i+1; j < gruppe.getMannschaftList().size(); j++){
-                    // Alle Spiele einer Gruppe ohne Sortierung
-                    spielList.add(new Spiel(gruppe.getMannschaftList().get(i), gruppe.getMannschaftList().get(j), Spielwert.GRUPPENSPIEL));
-                }
-            }
-
-            // Spiele speichern
-            for (Spiel spiel: spielList) {
-                addSpiel(spiel);
-            }
-
-            // Spiele der Gruppe hinzufügen
-            gruppe.setSpielList(spielList);
-        }
-    }
 
     /*
     Diese Methode erzeugt die Viertelfinals für die angegebene Mannschaftsklasse für die Gruppenanzahl von 2, 3 und 4
