@@ -40,18 +40,12 @@ public class SpielService {
         this.spielRepository.save(sp);
     }
 
-    public List<Spiel> getSpiele(){
-        return this.spielRepository.findAll();
-    }
-
-    public SpielTO getFinale(){
-        return new SpielTO();
-    }
-
-    public Spiel getHalbfinale(){ return new Spiel();}
-
-    public List<Spiel> getSpielBySpielwertUndMannschaftsklasse(Spielwert spielwert, Mannschaftsklasse mannschaftsklasse) {
+    public List<Spiel> getSpieleBySpielwertAndMannschaftsklasse(Spielwert spielwert, Mannschaftsklasse mannschaftsklasse){
         return this.spielRepository.findAllBySpielwertAndHeimmannschaft_Mannschaftsklasse(spielwert, mannschaftsklasse);
+    }
+
+    public Spiel getFinale(Mannschaftsklasse mannschaftsklasse){
+        return this.spielRepository.findBySpielwertAndHeimmannschaft_Mannschaftsklasse(mannschaftsklasse);
     }
 
     public List<Mannschaft> sortMannschaftsList(List<Mannschaft> toBeSorted) {
@@ -145,7 +139,7 @@ public class SpielService {
     Die zulässige Anzahl an Gruppen ist 1, 2, 3 und 4.
      */
     public void createHalbfinale(Mannschaftsklasse mannschaftsklasse) {
-        List<Spiel> viertelfinals = this.getSpielBySpielwertUndMannschaftsklasse(Spielwert.VIERTELFINALE, mannschaftsklasse);
+        List<Spiel> viertelfinals = this.getSpieleBySpielwertAndMannschaftsklasse(Spielwert.VIERTELFINALE, mannschaftsklasse);
 
         if (!viertelfinals.isEmpty()) {
             // Es gab Viertelfinals
@@ -192,7 +186,7 @@ public class SpielService {
     Die zulässige Anzahl an Gruppen ist 1 und 2.
      */
     public void createFinale(Mannschaftsklasse mannschaftsklasse) {
-        List<Spiel> halbfinals = this.getSpielBySpielwertUndMannschaftsklasse(Spielwert.HALBFINALE, mannschaftsklasse);
+        List<Spiel> halbfinals = this.getSpieleBySpielwertAndMannschaftsklasse(Spielwert.HALBFINALE, mannschaftsklasse);
         if (!halbfinals.isEmpty()) {
             addSpiel(new Spiel(halbfinals.get(0).getSieger(), halbfinals.get(1).getSieger(), Spielwert.FINALE));
         } else {

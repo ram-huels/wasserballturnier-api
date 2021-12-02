@@ -25,6 +25,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import wasserballturnier.api.generated.model.SpielArrayTO;
 import wasserballturnier.api.generated.model.SpielTO;
+import wasserballturnier.api.generated.model.Spielwert;
+import wasserballturnier.api.persistence.mannschaft.Mannschaftsklasse;
 import wasserballturnier.api.persistence.spiel.Spiel;
 import wasserballturnier.api.services.SpielService;
 
@@ -50,12 +52,12 @@ public class SpieleApiController implements SpieleApi {
         this.spielService.updateSpiel(body);
     }
 
-    public ResponseEntity<SpielTO> finalePost() {
-        return ResponseEntity.ok(spielService.getFinale());
+    public ResponseEntity<Spiel> finalePost(Mannschaftsklasse mannschaftsklasse) {
+        return ResponseEntity.ok(spielService.getFinale(mannschaftsklasse));
     }
 
-    public ResponseEntity<List<Spiel>> halbfinalePost() {
-        return ResponseEntity.ok(spielService.getSpiele());
+    public ResponseEntity<List<Spiel>> halbfinalePost(Mannschaftsklasse mannschaftsklasse) {
+        return ResponseEntity.ok(spielService.getSpieleBySpielwertAndMannschaftsklasse(Spielwert.HALBFINALE, mannschaftsklasse));
     }
 
 }

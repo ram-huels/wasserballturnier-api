@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.bind.annotation.CookieValue;
 import wasserballturnier.api.generated.model.SpielArrayTO;
 import wasserballturnier.api.generated.model.SpielTO;
+import wasserballturnier.api.persistence.mannschaft.Mannschaftsklasse;
 import wasserballturnier.api.persistence.spiel.Spiel;
 
 import javax.validation.Valid;
@@ -46,7 +47,7 @@ public interface SpieleApi {
     @RequestMapping(value = "/spiele/finale",
         produces = { "application/json" }, 
         method = RequestMethod.POST)
-    ResponseEntity<SpielTO> finalePost();
+    ResponseEntity<Spiel> finalePost(Mannschaftsklasse mannschaftsklasse);
 
 
     @Operation(summary = "Gibt alle Halbfinale zurück", description = "Gibt alle Halbfinale vom Turnier zurück", tags={ "Spiele" })
@@ -55,7 +56,7 @@ public interface SpieleApi {
     @RequestMapping(value = "/spiele/halbfinale",
         produces = { "application/json" }, 
         method = RequestMethod.POST)
-    ResponseEntity<List<Spiel>> halbfinalePost();
+    ResponseEntity<List<Spiel>> halbfinalePost(Mannschaftsklasse mannschaftsklasse);
 
 }
 
